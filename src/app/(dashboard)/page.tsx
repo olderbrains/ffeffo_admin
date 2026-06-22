@@ -1,6 +1,7 @@
 'use client';
 
 import { DollarSign, Package, ShoppingCart, Users, AlertTriangle } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { PageHeader } from '@/components/layout/page-header';
@@ -124,18 +125,18 @@ export default function DashboardPage() {
         <div className="rounded-lg border bg-card p-6">
           <h3 className="text-lg font-semibold">Quick Actions</h3>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <a href="/products/new" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
+            <Link href="/products/new" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
               Add Product
-            </a>
-            <a href="/orders" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
+            </Link>
+            <Link href="/orders" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
               View Orders
-            </a>
-            <a href="/inventory" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
+            </Link>
+            <Link href="/inventory" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
               Manage Stock
-            </a>
-            <a href="/coupons" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
+            </Link>
+            <Link href="/coupons" className="rounded-md border p-3 text-center text-sm transition-colors hover:bg-accent">
               Create Coupon
-            </a>
+            </Link>
           </div>
         </div>
       </div>
