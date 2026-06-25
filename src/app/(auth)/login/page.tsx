@@ -96,7 +96,14 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted/40">
       <div className="w-full max-w-md space-y-6 rounded-lg border bg-card p-8 shadow-sm">
         <div className="text-center">
-          <h1 className="text-2xl font-bold">Speffo Admin</h1>
+          <div className="flex justify-center mb-4">
+            <img
+              src="/logo.png"
+              alt="Speffo"
+              className="h-10 w-auto object-contain"
+            />
+          </div>
+          <h1 className="text-2xl font-bold">Admin Panel</h1>
           <p className="mt-2 text-sm text-muted-foreground">Sign in to manage your store</p>
         </div>
 

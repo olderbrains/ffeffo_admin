@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
+import { Pencil, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { PageHeader } from '@/components/layout/page-header';
@@ -68,13 +68,14 @@ export default function ProductsPage() {
               <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Status</th>
               <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Price</th>
               <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Stock</th>
+              <th className="px-4 py-3 text-right text-sm font-medium text-muted-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading
               ? Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="border-b">
-                    {Array.from({ length: 5 }).map((_, j) => (
+                    {Array.from({ length: 6 }).map((_, j) => (
                       <td key={j} className="px-4 py-3">
                         <div className="h-4 w-24 animate-pulse rounded bg-muted" />
                       </td>
@@ -106,6 +107,15 @@ export default function ProductsPage() {
                       ₹{product.basePrice.toLocaleString('en-IN')}
                     </td>
                     <td className="px-4 py-3 text-sm">{product.totalStock}</td>
+                    <td className="px-4 py-3 text-right">
+                      <Link
+                        href={`/products/${product._id}/edit`}
+                        className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors hover:bg-muted"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                        Edit
+                      </Link>
+                    </td>
                   </tr>
                 ))}
           </tbody>

@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     template: '%s | Speffo Admin',
   },
   description: 'Speffo Ecommerce Admin Panel',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   robots: { index: false, follow: false },
 };
 

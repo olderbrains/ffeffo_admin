@@ -40,6 +40,8 @@ export default function NewProductPage() {
   const [categoryId, setCategoryId] = useState('');
   const [brandId, setBrandId] = useState('');
   const [status, setStatus] = useState<'draft' | 'active'>('draft');
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [tags, setTags] = useState('');
   const [images, setImages] = useState<ProductImage[]>([]);
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
@@ -82,6 +84,10 @@ export default function NewProductPage() {
         basePrice: Number(basePrice),
         ...(salePrice && { salePrice: Number(salePrice) }),
         status,
+        isFeatured,
+        ...(tags.trim() && {
+          tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
+        }),
         ...((seoTitle || seoDescription) && {
           seo: {
             ...(seoTitle && { title: seoTitle }),
@@ -90,9 +96,9 @@ export default function NewProductPage() {
         }),
       };
 
-      await api.post('/products', payload);
-      toast.success('Product created');
-      router.push('/products');
+      const created = await api.post<{ _id: string }>('/products', payload);
+      toast.success('Product created! Add variants now.');
+      router.push(`/products/${created._id}/edit`);
     } catch (err) {
       const message =
         err instanceof ApiError ? err.message : 'Failed to create product';
@@ -167,6 +173,7 @@ export default function NewProductPage() {
               <ImageUpload images={images} onChange={setImages} folder="products" />
             </div>
           </section>
+
         </div>
 
         <div className="space-y-6">
@@ -210,6 +217,24 @@ export default function NewProductPage() {
                   <option value="active">Active</option>
                 </select>
               </div>
+              <div>
+                <label className="text-sm font-medium">Tags</label>
+                <input
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  className={inputClass}
+                  placeholder="Comma-separated, e.g. organic, summer"
+                />
+              </div>
+              <label className="flex cursor-pointer items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  checked={isFeatured}
+                  onChange={(e) => setIsFeatured(e.target.checked)}
+                  className="h-4 w-4 rounded border"
+                />
+                <span className="text-sm font-medium">Featured product</span>
+              </label>
             </div>
           </section>
 
@@ -237,7 +262,7 @@ export default function NewProductPage() {
             disabled={submitting}
             className="w-full rounded-md bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {submitting ? 'Creating…' : 'Create Product'}
+            {submitting ? 'Creating…' : 'Create Product & Add Variants'}
           </button>
         </div>
       </div>

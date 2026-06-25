@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, LogOut, Search, User } from 'lucide-react';
+import { Bell, LogOut, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { logout as performLogout } from '@/lib/api/auth';
@@ -15,41 +15,50 @@ export function TopNav() {
     router.replace('/login');
   };
 
+  const initials = [user?.firstName?.[0], user?.lastName?.[0]].filter(Boolean).join('') || '?';
+
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex items-center gap-4">
-        <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="search"
-            placeholder="Search..."
-            className="h-9 w-64 rounded-md border bg-muted/40 pl-9 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-border bg-white px-6">
+      {/* Search */}
+      <div className="relative hidden md:block">
+        <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+        <input
+          type="search"
+          placeholder="Search…"
+          className="h-8 w-60 rounded-md border border-border bg-secondary/60 pl-8 pr-4 text-sm outline-none placeholder:text-muted-foreground/60 focus:border-primary/40 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+        />
       </div>
 
-      <div className="flex items-center gap-4">
+      {/* Right */}
+      <div className="flex items-center gap-2 ml-auto">
+        {/* Notifications */}
         <button
-          className="relative rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          className="relative rounded-md p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           aria-label="Notifications"
         >
-          <Bell className="h-5 w-5" />
-          <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive" />
+          <Bell className="h-4 w-4" />
+          <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-destructive" />
         </button>
 
-        <div className="flex items-center gap-3">
+        {/* Divider */}
+        <div className="mx-1 h-5 w-px bg-border" />
+
+        {/* User */}
+        <div className="flex items-center gap-2.5">
           <div className="hidden text-right sm:block">
-            <p className="text-sm font-medium">
+            <p className="text-[13px] font-medium leading-tight text-foreground">
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-muted-foreground capitalize">{user?.role?.replace('_', ' ')}</p>
+            <p className="text-[11px] text-muted-foreground capitalize">
+              {user?.role?.replace('_', ' ')}
+            </p>
           </div>
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">
-            {user?.firstName?.[0] || <User className="h-4 w-4" />}
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[12px] font-semibold text-white select-none">
+            {initials}
           </div>
           <button
             onClick={handleLogout}
-            className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             aria-label="Logout"
           >
             <LogOut className="h-4 w-4" />
